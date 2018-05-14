@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Estatuto - ASSOF
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="div-pdf">
+      <button ion-button (click)="incrementZoom(-0.1)">-
+        </button>
+        <button ion-button (click)="incrementZoom(0.1)" >+
+        </button>
+    <pdf-viewer
+    [original-size]=false
+    [src]="pdfSrc"  
+    [zoom]="zoom"
+    style="display: block;"
+  >
+  
+</pdf-viewer>
+</div>
+</ion-content>
+

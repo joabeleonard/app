@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      Perfil
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-item no-lines>
+    <div class="avatar-wrapper">
+      <ion-avatar>
+        <img [src]="avatar">
+      </ion-avatar>
+
+      <button (click)="pictureFromCamera()" class="btn-tirar-foto" ion-button icon-only round>
+        <ion-icon name="camera"></ion-icon>
+      </button>
+    </div>
+  </ion-item>
+
+  <ion-card>
+   
+    <form (ngSubmit)="downloadRequerimento()">
+        <button ion-button block type="submit" class="login">REQUERIMENTO DE ADESÃO</button>
+    </form>
+
+  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6>
+        <button block ion-button color="primary" (click)="pictureFromCamera()">Camera</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>

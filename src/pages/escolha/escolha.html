@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Noticia</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-item-group>
+    
+    <h2>{{ noticia.titulo }}</h2>
+    <ion-item-divider color="light">
+      {{noticia.data  | date:"dd/MM/yy"}}
+    </ion-item-divider>
+
+    <img [src]="caminhoImagem + noticia.image" />
+    <p> {{ noticia.noticia }}</p>
+  </ion-item-group>
+
+</ion-content>
