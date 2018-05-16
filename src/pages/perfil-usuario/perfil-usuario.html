@@ -17,13 +17,26 @@
         <img [src]="avatar">
       </ion-avatar>
 
-      <button (click)="pictureFromCamera()" class="btn-tirar-foto" ion-button icon-only round>
+      <button (click)="tiraFoto()" class="btn-tirar-foto" ion-button icon-only round>
         <ion-icon name="camera"></ion-icon>
       </button>
     </div>
   </ion-item>
 
+
   <ion-card>
+
+              <ion-item>
+                <ion-icon name="contact" item-left></ion-icon>
+                {{ usuarioLogado.nome }}
+              </ion-item>
+          
+          
+              <ion-item>
+                <ion-icon name="at" item-left></ion-icon>
+                <p>{{ usuarioLogado.email }}</p>
+              </ion-item>
+
    
     <form (ngSubmit)="downloadRequerimento()">
         <button ion-button block type="submit" class="login">REQUERIMENTO DE ADESÃO</button>
@@ -34,10 +47,3 @@
 </ion-content>
 
 <ion-footer>
-  <ion-grid>
-    <ion-row>
-      <ion-col col-6>
-        <button block ion-button color="primary" (click)="pictureFromCamera()">Camera</button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>

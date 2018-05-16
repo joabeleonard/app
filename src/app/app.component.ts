@@ -20,7 +20,7 @@ import { PerfilUsuarioPage } from '../pages/perfil-usuario/perfil-usuario';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = PerfilUsuarioPage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string, component: any}>;
 
