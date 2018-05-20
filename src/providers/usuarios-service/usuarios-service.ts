@@ -27,6 +27,21 @@ export class UsuariosServiceProvider {
               .do((usuario: Usuario) => this._usuarioLogado = usuario);
   }
 
+  cadastrarUsuario(cpf, senha,nome, email){
+    var usuario = {"cpf":cpf, "senha":senha, "nome":nome,"email":email};
+
+    return this._http.post<Usuario>(this._url+'/usuarios/cadastrar',usuario )
+    .do((usuario: Usuario) => this._usuarioLogado = usuario);
+  }
+
+  uploadImageUsuario(image){
+
+    let postData = new FormData();
+
+    postData.append('file', image);
+    return this._http.post<Usuario>(this._url+'/usuarios/uploadImage',postData );
+  }
+
   obtemUsuarioLogado() {
     return this._usuarioLogado;
   }

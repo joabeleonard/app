@@ -6,7 +6,13 @@ import { normalizeURL } from 'ionic-angular/util/util';
 //import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 //import { File } from '@ionic-native/file';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { FileOpener } from '@ionic-native/file-opener';
+import { File } from '@ionic-native/file';
 
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { DocumentViewerOptions, DocumentViewer } from '@ionic-native/document-viewer';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+import { Platform } from 'ionic-angular/platform/platform';
 
 /**
  * Generated class for the PerfilUsuarioPage page.
@@ -22,9 +28,7 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 })
 export class PerfilUsuarioPage {
 
-  
-  //fileTransfer: FileTransferObject = this.transfer.create();
-  
+    
   image: string;
 
   constructor(public navCtrl: NavController, 
@@ -32,9 +36,11 @@ export class PerfilUsuarioPage {
     private _usuariosService: UsuariosServiceProvider,
     private _camera: Camera,
     private _alertCtrl: AlertController,
-    //private transfer: FileTransfer,
-    // private file: File
-    ) {
+    private transfer: FileTransfer,
+    private file: File,
+    private document: DocumentViewer,
+    private platform: Platform,
+    private _loadingCtrl: LoadingController) {
   }
 
   pictureFromCamera() {
@@ -87,5 +93,45 @@ export class PerfilUsuarioPage {
 
   downloadRequerimento(){
 
+    let loading = this._loadingCtrl.create({
+      content: 'Baixando Documento...'
+    });
+
+    loading.present();
+
+    const options: DocumentViewerOptions = {
+      title: 'My PDF'
+    }
+
+    let path = null;
+ 
+    if (this.platform.is('ios')) {
+      path = this.file.documentsDirectory;
+    } else if (this.platform.is('android')) {
+      path = this.file.dataDirectory;
+    }
+ 
+    const transfer = this.transfer.create();
+    transfer.download(this._usuariosService._url+'/Estatuto_assof.pdf', path + 'Estatuto_assof.pdf').then(entry => {
+      let url = entry.toURL();
+      this.document.viewDocument(url, 'application/pdf', {});
+      loading.dismiss();
+    });
+  
+    
+    
+
+
+     // const fileTransfer: FileTransferObject = this.transfer.create();
+      //const mime = 'application/pdf';
+      //const pdfFile = 'http://assofce.kinghost.net:21321/Estatuto_assof.pdf';
+      // alert(this.file.dataDirectory);
+      //fileTransfer.download(pdfFile, this.file.externalDataDirectory + 'file.pdf', true)
+        //  .then((entry) => {
+          //    alert('download complete: ' + entry.toURL());
+          //}, (error) => {
+              // handle error
+          //});
+  
   }
 }

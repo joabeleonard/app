@@ -12,6 +12,7 @@ import { EstatutoPage } from '../pages/estatuto/estatuto';
 import { InformacoesGeraisPage } from '../pages/informacoes-gerais/informacoes-gerais';
 import { UsuariosServiceProvider } from '../providers/usuarios-service/usuarios-service';
 import { PerfilUsuarioPage } from '../pages/perfil-usuario/perfil-usuario';
+import { GaleriaPresidentesPage } from '../pages/galeria-presidentes/galeria-presidentes';
 
 @Component({
   selector: 'myapp',
@@ -35,6 +36,7 @@ export class MyApp {
       { title: 'Acompanhamento Juridico', component: AcompanhamentoJuridicoPage },
       { title: 'Beneficios', component: BeneficiosPage },
       { title: 'Estatuto', component: EstatutoPage },
+      { title: 'Galeria de Presidentes', component: GaleriaPresidentesPage },
       { title: 'Informações Gerais', component: InformacoesGeraisPage }
 
     ];

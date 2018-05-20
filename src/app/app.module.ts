@@ -25,8 +25,11 @@ import { ApiServiceProvider } from '../providers/api-service';
 import { ModalAcompanhamentoPage } from '../pages/modal-acompanhamento/modal-acompanhamento';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { Camera } from '@ionic-native/camera';
-//import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
-//import { File } from '@ionic-native/file';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { DocumentViewer } from '@ionic-native/document-viewer';
+import { File } from '@ionic-native/file';
+import { GaleriaPresidentesPage } from '../pages/galeria-presidentes/galeria-presidentes';
+import { CadastroUsuarioPage } from '../pages/cadastro-usuario/cadastro-usuario';
 
 
 
@@ -41,7 +44,9 @@ import { Camera } from '@ionic-native/camera';
     LoginPage,
     EstatutoPage,
     BeneficiosPage,
-    ModalAcompanhamentoPage
+    ModalAcompanhamentoPage,
+    GaleriaPresidentesPage,
+    CadastroUsuarioPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,9 @@ import { Camera } from '@ionic-native/camera';
     InformacoesGeraisPage,
     EstatutoPage,
     BeneficiosPage,
-    ModalAcompanhamentoPage
+    ModalAcompanhamentoPage,
+    GaleriaPresidentesPage,
+    CadastroUsuarioPage
   ],
   providers: [
     StatusBar,
@@ -71,7 +78,9 @@ import { Camera } from '@ionic-native/camera';
     ApiServiceProvider,
     Camera,
     AcompanhamentoJuridicoServiceProvider,
-   // FileTransfer, FileTransferObject,File
+    FileTransfer, FileTransferObject,File,DocumentViewer,
+    ,
+
   ]
 })
 export class AppModule {}

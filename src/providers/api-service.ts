@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class ApiServiceProvider {
 
   // Quando for necessário, aqui será o único lugar a ser modificado!
-  private _url: string = 'http://assofce.kinghost.net:21321';
+  private _url: string = 'http://assofce.kinghost.net:21311';
 
   get url() {
     return this._url;

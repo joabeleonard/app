@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+import { ApiServiceProvider } from '../../providers/api-service';
 
 /**
  * Generated class for the EstatutoPage page.
@@ -18,13 +20,27 @@ import { PdfViewerComponent } from 'ng2-pdf-viewer';
 export class EstatutoPage {
 
   public pdfSrc;
+  _url: string;
   public zoom: number = 1.0;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public pdfViewerComponent: PdfViewerComponent) {
+    public pdfViewerComponent: PdfViewerComponent,
+    private _loadingCtrl: LoadingController,
+    private _api: ApiServiceProvider) {
   }
 
   ionViewDidLoad() {
-    this.pdfSrc ='assets/file/Estatuto_assof.pdf';
+
+    this._url = this._api.url;
+
+    let loading = this._loadingCtrl.create({
+      content: 'Carregando Estatuto...'
+    });
+
+    loading.present();
+    console.log(this._url+'/Estatuto_assof.pdf');
+    this.pdfSrc =this._url+'/Estatuto_assof.pdf';
+
+    loading.dismiss();
     console.log('ionViewDidLoad EstatutoPage');
   }
 
