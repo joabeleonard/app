@@ -15,6 +15,15 @@
 
 <ion-content padding>
 
+  <div class="avatar-wrapper">
+    <ion-avatar>
+      <img [src]="avatar">
+    </ion-avatar>
+
+    <button (click)="tiraFoto()" class="btn-tirar-foto" ion-button icon-only round>
+      <ion-icon name="camera"></ion-icon>
+    </button>
+  </div>
     <form (ngSubmit)="cadastrarUsuario()">
         <ion-item>
             <ion-label stacked>CPF</ion-label>
@@ -36,6 +45,7 @@
             <ion-input [(ngModel)]="senha" name="senha" type="password"></ion-input>
         </ion-item>
   
+       
         
         <button ion-button block type="submit" class="login">CADASTRAR</button>
 

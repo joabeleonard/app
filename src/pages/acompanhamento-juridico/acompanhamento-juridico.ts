@@ -67,6 +67,8 @@ export class AcompanhamentoJuridicoPage {
                   }).present();
                 }
               );
+
+              
   }
 
   get usuarioLogado(){

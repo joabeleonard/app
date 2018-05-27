@@ -7,6 +7,7 @@ import { Camera } from '@ionic-native/camera';
 import { normalizeURL } from 'ionic-angular/util/util';
 import { HomePage } from '../home/home';
 import { FileTransferObject, FileUploadOptions, FileTransfer } from '@ionic-native/file-transfer';
+import { LoginPage } from '../login/login';
 
 
 /**
@@ -60,9 +61,7 @@ export class CadastroUsuarioPage {
             fileName: this.cpf+".jpg",
             chunkedMode: false,
             mimeType: "image/jpeg",
-            headers: {'Content-Type':'application/octet-stream', 'filename':this.cpf+".jpg"},
-            httpMethod:'POST',
-
+            headers: {}
           }
           const fileTransfer: FileTransferObject = this.transfer.create();
           console.log(this._usuariosService._url+'/usuarios/uploadImage');
@@ -76,7 +75,7 @@ export class CadastroUsuarioPage {
                   ]
                 }).present();
       
-                this.navCtrl.setRoot(HomePage);
+                this.navCtrl.setRoot(LoginPage);
                 loading.dismiss();
                 console.log(data+" Uploaded Successfully");
           }, (err) => {
@@ -84,7 +83,7 @@ export class CadastroUsuarioPage {
 
             this._alertCtrl.create({
               title:'Erro',
-              subTitle:err,
+              subTitle:this.fotoUri ,
               buttons:[
                 {text:'OK'}
               ]
