@@ -13,6 +13,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { DocumentViewerOptions, DocumentViewer } from '@ionic-native/document-viewer';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 import { Platform } from 'ionic-angular/platform/platform';
+import { ImageResizer } from '@ionic-native/image-resizer';
 
 /**
  * Generated class for the PerfilUsuarioPage page.
@@ -30,6 +31,9 @@ export class PerfilUsuarioPage {
 
     
   image: string;
+  fotoFichaAdesao: string; 
+  fotoDocumentoFrente: string; 
+  fotoDocumentoVerso: string;
 
   constructor(public navCtrl: NavController, 
       public navParams: NavParams,
@@ -40,36 +44,11 @@ export class PerfilUsuarioPage {
     private file: File,
     private document: DocumentViewer,
     private platform: Platform,
-    private _loadingCtrl: LoadingController) {
-  }
-
-  pictureFromCamera() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this._camera.DestinationType.DATA_URL,
-      encodingType: this._camera.EncodingType.JPEG,
-      mediaType: this._camera.MediaType.PICTURE,
-      correctOrientation: true,
-      saveToPhotoAlbum: true
-    }
-
-    this.capturePhoto(options);
+    private _loadingCtrl: LoadingController,
+    private imageResizer: ImageResizer) {
   }
 
   
-  async capturePhoto(options: CameraOptions) {
-    try {
-      //Result is a base64 image but can be changed to use a filepath.
-      const result = await this._camera.getPicture(options)
-
-      //Append result to image to display in view
-      this.image = `data:image/jpeg;base64,${result}`;
-    }
-    catch (e) {
-      console.error(e);
-    }
-  }
-
   tiraFoto() {
     this._camera.getPicture({
       destinationType: this._camera.DestinationType.FILE_URI,
@@ -83,6 +62,78 @@ export class PerfilUsuarioPage {
     .catch(err => console.log(err));
   }
 
+  tiraFotoFicha() {
+    this._camera.getPicture({
+      destinationType: this._camera.DestinationType.FILE_URI,
+      saveToPhotoAlbum: true,
+      correctOrientation: true
+    })
+    .then(fotoUri => {
+      this.fotoFichaAdesao = normalizeURL(fotoUri);
+    })
+    .catch(err => console.log(err));
+  }
+  tirarFotoFrenteDocumento() {
+    this._camera.getPicture({
+      destinationType: this._camera.DestinationType.FILE_URI,
+      saveToPhotoAlbum: true,
+      correctOrientation: true
+    })
+    .then(fotoUri => {
+      this.fotoDocumentoFrente = normalizeURL(fotoUri);
+    })
+    .catch(err => console.log(err));
+  }
+  tirarFotoVersoDocumento() {
+
+    this._camera.getPicture({
+      destinationType: this._camera.DestinationType.FILE_URI,
+      saveToPhotoAlbum: true,
+      correctOrientation: true
+    })
+    .then(fotoUri => {
+      this.fotoDocumentoVerso = normalizeURL(fotoUri);
+
+        this.imageResizer.resize({
+          uri: fotoUri,
+          quality: 100,
+          width: 1280,
+          height: 1280
+        }).then(uri => {
+
+          let options: FileUploadOptions = {
+            fileKey: 'file',
+            fileName: this.usuarioLogado.cpf+"fotoDocumentoVerso.jpg",
+            chunkedMode: false,
+            mimeType: "image/jpeg",
+            headers: {}
+          }
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          fileTransfer.upload( this.fotoDocumentoVerso, this._usuariosService._url+'/usuarios/uploadImage', options)
+            .then(() => {
+                this._alertCtrl.create({
+                  title:'Cadastro',
+                  subTitle:'Cadastro realizado!',
+                  buttons:[
+                    {text:'OK'}
+                  ]
+                }).present();
+      
+          }, (err) => {
+            this._alertCtrl.create({
+              title:'Erro',
+              subTitle:err ,
+              buttons:[
+                {text:'OK'}
+              ]
+            }).present();
+            console.log(err);
+          });
+        })
+      
+    })
+    .catch(err => console.log(err));
+  }
   get avatar() {
     return this._usuariosService.obtemAvatar();
   }

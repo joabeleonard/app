@@ -38,9 +38,24 @@
               </ion-item>
 
    
-    <form (ngSubmit)="downloadRequerimento()">
-        <button ion-button block type="submit" class="login">REQUERIMENTO DE ADESÃO</button>
+    <form (ngSubmit)="tiraFotoFicha()">
+        <ion-avatar>
+            <img [src]="fotoFichaAdesao">
+          </ion-avatar>
+        <button ion-button block type="submit" class="login">Enviar Ficha de Adesão</button>
     </form>
+    <form (ngSubmit)="tirarFotoFrenteDocumento()">
+        <ion-avatar>
+            <img [src]="fotoDocumentoFrente">
+        </ion-avatar>
+      <button ion-button block type="submit" class="login">Enviar Documento (Frente)</button>
+  </form>
+  <form (ngSubmit)="tirarFotoVersoDocumento()">
+      <ion-avatar>
+          <img [src]="fotoDocumentoVerso">
+        </ion-avatar>
+    <button ion-button block type="submit" class="login">Enviar Documento (Verso)</button>
+</form>
 
   </ion-card>
 

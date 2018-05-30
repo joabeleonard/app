@@ -8,7 +8,7 @@ import { normalizeURL } from 'ionic-angular/util/util';
 import { HomePage } from '../home/home';
 import { FileTransferObject, FileUploadOptions, FileTransfer } from '@ionic-native/file-transfer';
 import { LoginPage } from '../login/login';
-
+import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
 
 /**
  * Generated class for the CadastroUsuarioPage page.
@@ -37,7 +37,8 @@ export class CadastroUsuarioPage {
     private _loadingCtrl: LoadingController,
     private _usuariosService: UsuariosServiceProvider,
     private _camera: Camera,
-    private transfer: FileTransfer) {
+    private transfer: FileTransfer,
+    private imageResizer: ImageResizer) {
   }
 
   ionViewDidLoad() {
@@ -57,16 +58,15 @@ export class CadastroUsuarioPage {
           
 
           let options: FileUploadOptions = {
-            fileKey: 'ionicfile',
+            fileKey: 'file',
             fileName: this.cpf+".jpg",
             chunkedMode: false,
             mimeType: "image/jpeg",
             headers: {}
           }
           const fileTransfer: FileTransferObject = this.transfer.create();
-          console.log(this._usuariosService._url+'/usuarios/uploadImage');
           fileTransfer.upload( this.fotoUri, this._usuariosService._url+'/usuarios/uploadImage', options)
-            .then((data) => {
+            .then(() => {
                 this._alertCtrl.create({
                   title:'Cadastro',
                   subTitle:'Cadastro realizado!',
@@ -77,13 +77,12 @@ export class CadastroUsuarioPage {
       
                 this.navCtrl.setRoot(LoginPage);
                 loading.dismiss();
-                console.log(data+" Uploaded Successfully");
           }, (err) => {
             loading.dismiss();
 
             this._alertCtrl.create({
               title:'Erro',
-              subTitle:this.fotoUri ,
+              subTitle:err ,
               buttons:[
                 {text:'OK'}
               ]
@@ -111,11 +110,22 @@ export class CadastroUsuarioPage {
     this._camera.getPicture({
       destinationType: this._camera.DestinationType.FILE_URI,
       saveToPhotoAlbum: true,
-      correctOrientation: true
-    })
-    .then(fotoUri => {
-      this.fotoUri = normalizeURL(fotoUri);
-      this._usuariosService.salvaAvatar(fotoUri);
+      correctOrientation: true,
+      mediaType: this._camera.MediaType.PICTURE,
+      encodingType: this._camera.EncodingType.JPEG,
+      allowEdit: true
+    }).then(fotoUri => {
+
+      this.imageResizer.resize({
+        uri: fotoUri,
+        quality: 60,
+        width: 1280,
+        height: 1280
+      }).then(uri => {
+        this.fotoUri = normalizeURL(uri);
+        this._usuariosService.salvaAvatar(uri);
+      })
+     
     })
     .catch(err => console.log(err));
   }
