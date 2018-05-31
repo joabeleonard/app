@@ -37,8 +37,7 @@ export class EstatutoPage {
     });
 
     loading.present();
-    console.log(this._url+'/Estatuto_assof.pdf');
-    this.pdfSrc =this._url+'/Estatuto_assof.pdf';
+    this.pdfSrc ='assets/file/Estatuto_assof.pdf';
 
     loading.dismiss();
     console.log('ionViewDidLoad EstatutoPage');

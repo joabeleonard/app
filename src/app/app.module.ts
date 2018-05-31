@@ -78,8 +78,7 @@ import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
     ApiServiceProvider,
     Camera, ImageResizer,
     AcompanhamentoJuridicoServiceProvider,
-    FileTransfer, FileTransferObject,File,DocumentViewer,
-    ,
+    FileTransfer, FileTransferObject,File,DocumentViewer
 
   ]
 })

@@ -32,7 +32,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Perfil', component: PerfilUsuarioPage },
+      { title: 'Dados Associado', component: PerfilUsuarioPage },
       { title: 'Acompanhamento Juridico', component: AcompanhamentoJuridicoPage },
       { title: 'Beneficios', component: BeneficiosPage },
       { title: 'Estatuto', component: EstatutoPage },

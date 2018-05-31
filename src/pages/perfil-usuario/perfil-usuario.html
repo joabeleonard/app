@@ -14,7 +14,7 @@
   <ion-item no-lines>
     <div class="avatar-wrapper">
       <ion-avatar>
-        <img [src]="avatar">
+        <img [src]="fotoUsuarios">
       </ion-avatar>
 
       <button (click)="tiraFoto()" class="btn-tirar-foto" ion-button icon-only round>
@@ -38,6 +38,9 @@
               </ion-item>
 
    
+     <form (ngSubmit)="downloadRequerimento()">
+          <button ion-button block type="submit" class="login">Download Ficha de Adesão</button>
+     </form>
     <form (ngSubmit)="tiraFotoFicha()">
         <ion-avatar>
             <img [src]="fotoFichaAdesao">

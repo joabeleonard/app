@@ -30,7 +30,7 @@ import { ImageResizer } from '@ionic-native/image-resizer';
 export class PerfilUsuarioPage {
 
     
-  image: string;
+  fotoUsuarios: string;
   fotoFichaAdesao: string; 
   fotoDocumentoFrente: string; 
   fotoDocumentoVerso: string;
@@ -48,21 +48,80 @@ export class PerfilUsuarioPage {
     private imageResizer: ImageResizer) {
   }
 
+  ionViewDidLoad() {
+    this.fotoUsuarios = this._usuariosService.urlService()+this.usuarioLogado.cpf+".jpg";
+    this.fotoFichaAdesao= this._usuariosService.urlService()+this.usuarioLogado.cpf+"fotoFichaAdesao.jpg"; 
+    this.fotoDocumentoFrente= this._usuariosService.urlService()+this.usuarioLogado.cpf+"fotoDocumentoFrente.jpg"; 
+    this.fotoDocumentoVerso= this._usuariosService.urlService()+this.usuarioLogado.cpf+"fotoDocumentoVerso.jpg";
+  }
   
+
   tiraFoto() {
+
     this._camera.getPicture({
       destinationType: this._camera.DestinationType.FILE_URI,
       saveToPhotoAlbum: true,
       correctOrientation: true
     })
     .then(fotoUri => {
-      fotoUri = normalizeURL(fotoUri);
-      this._usuariosService.salvaAvatar(fotoUri);
+      this.fotoUsuarios = normalizeURL(fotoUri);
+
+        this.imageResizer.resize({
+          uri: fotoUri,
+          quality: 100,
+          width: 1280,
+          height: 1280
+        }).then(uri => {
+
+          let loading = this._loadingCtrl.create({
+            content: 'Aguarde...'
+          });
+          loading.present();
+      
+          let options: FileUploadOptions = {
+            fileKey: 'file',
+            fileName: this.usuarioLogado.cpf+".jpg",
+            chunkedMode: false,
+            mimeType: "image/jpeg",
+            headers: {}
+          }
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          fileTransfer.upload( this.fotoUsuarios, this._usuariosService._url+'/usuarios/uploadImage', options)
+            .then(() => {
+              loading.dismiss();
+                this._alertCtrl.create({
+                  title:'Foto',
+                  subTitle:'Foto Enviada!',
+                  buttons:[
+                    {text:'OK'}
+                  ]
+                }).present();
+      
+          }, (err) => {
+            loading.dismiss();
+            this._alertCtrl.create({
+              title:'Erro',
+              subTitle:err ,
+              buttons:[
+                {text:'OK'}
+              ]
+            }).present();
+            console.log(err);
+          });
+        })
+      
     })
     .catch(err => console.log(err));
   }
 
+
+
   tiraFotoFicha() {
+    let loading = this._loadingCtrl.create({
+      content: 'Aguarde...'
+    });
+
+    loading.present();
     this._camera.getPicture({
       destinationType: this._camera.DestinationType.FILE_URI,
       saveToPhotoAlbum: true,
@@ -70,10 +129,58 @@ export class PerfilUsuarioPage {
     })
     .then(fotoUri => {
       this.fotoFichaAdesao = normalizeURL(fotoUri);
+
+        this.imageResizer.resize({
+          uri: fotoUri,
+          quality: 100,
+          width: 1280,
+          height: 1280
+        }).then(uri => {
+
+          let options: FileUploadOptions = {
+            fileKey: 'file',
+            fileName: this.usuarioLogado.cpf+"fotoFichaAdesao.jpg",
+            chunkedMode: false,
+            mimeType: "image/jpeg",
+            headers: {}
+          }
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          fileTransfer.upload( this.fotoFichaAdesao, this._usuariosService._url+'/usuarios/uploadImage', options)
+            .then(() => {
+
+                loading.dismiss();
+                this._alertCtrl.create({
+                  title:'Foto',
+                  subTitle:'Foto Enviada!',
+                  buttons:[
+                    {text:'OK'}
+                  ]
+                }).present();
+      
+          }, (err) => {
+            loading.dismiss();
+            this._alertCtrl.create({
+              title:'Erro',
+              subTitle:err ,
+              buttons:[
+                {text:'OK'}
+              ]
+            }).present();
+            console.log(err);
+          });
+        })
+      
     })
     .catch(err => console.log(err));
   }
+
+
   tirarFotoFrenteDocumento() {
+
+    let loading = this._loadingCtrl.create({
+      content: 'Aguarde...'
+    });
+    loading.present();
     this._camera.getPicture({
       destinationType: this._camera.DestinationType.FILE_URI,
       saveToPhotoAlbum: true,
@@ -81,10 +188,56 @@ export class PerfilUsuarioPage {
     })
     .then(fotoUri => {
       this.fotoDocumentoFrente = normalizeURL(fotoUri);
+
+        this.imageResizer.resize({
+          uri: fotoUri,
+          quality: 100,
+          width: 1280,
+          height: 1280
+        }).then(uri => {
+
+          let options: FileUploadOptions = {
+            fileKey: 'file',
+            fileName: this.usuarioLogado.cpf+"fotoDocumentoFrente.jpg",
+            chunkedMode: false,
+            mimeType: "image/jpeg",
+            headers: {}
+          }
+          const fileTransfer: FileTransferObject = this.transfer.create();
+          fileTransfer.upload( this.fotoDocumentoFrente, this._usuariosService._url+'/usuarios/uploadImage', options)
+            .then(() => {
+              loading.dismiss();
+                this._alertCtrl.create({
+                  title:'Foto',
+                  subTitle:'Foto Enviada!',
+                  buttons:[
+                    {text:'OK'}
+                  ]
+                }).present();
+      
+          }, (err) => {
+            loading.dismiss();
+            this._alertCtrl.create({
+              title:'Erro',
+              subTitle:err ,
+              buttons:[
+                {text:'OK'}
+              ]
+            }).present();
+            console.log(err);
+          });
+        })
+      
     })
     .catch(err => console.log(err));
   }
+
+
   tirarFotoVersoDocumento() {
+    let loading = this._loadingCtrl.create({
+      content: 'Aguarde...'
+    });
+    loading.present();
 
     this._camera.getPicture({
       destinationType: this._camera.DestinationType.FILE_URI,
@@ -111,15 +264,17 @@ export class PerfilUsuarioPage {
           const fileTransfer: FileTransferObject = this.transfer.create();
           fileTransfer.upload( this.fotoDocumentoVerso, this._usuariosService._url+'/usuarios/uploadImage', options)
             .then(() => {
+                loading.dismiss();
                 this._alertCtrl.create({
-                  title:'Cadastro',
-                  subTitle:'Cadastro realizado!',
+                  title:'Foto',
+                  subTitle:'Foto Enviada!',
                   buttons:[
                     {text:'OK'}
                   ]
                 }).present();
       
           }, (err) => {
+            loading.dismiss();
             this._alertCtrl.create({
               title:'Erro',
               subTitle:err ,
@@ -150,39 +305,30 @@ export class PerfilUsuarioPage {
 
     loading.present();
 
-    const options: DocumentViewerOptions = {
-      title: 'My PDF'
-    }
-
-    let path = null;
- 
-    if (this.platform.is('ios')) {
-      path = this.file.documentsDirectory;
-    } else if (this.platform.is('android')) {
-      path = this.file.dataDirectory;
-    }
- 
-    const transfer = this.transfer.create();
-    transfer.download(this._usuariosService._url+'/Estatuto_assof.pdf', path + 'Estatuto_assof.pdf').then(entry => {
-      let url = entry.toURL();
-      this.document.viewDocument(url, 'application/pdf', {});
-      loading.dismiss();
-    });
-  
-    
     
 
-
-     // const fileTransfer: FileTransferObject = this.transfer.create();
-      //const mime = 'application/pdf';
-      //const pdfFile = 'http://assofce.kinghost.net:21321/Estatuto_assof.pdf';
-      // alert(this.file.dataDirectory);
-      //fileTransfer.download(pdfFile, this.file.externalDataDirectory + 'file.pdf', true)
-        //  .then((entry) => {
-          //    alert('download complete: ' + entry.toURL());
-          //}, (error) => {
-              // handle error
-          //});
+      const fileTransfer: FileTransferObject = this.transfer.create();
+      const mime = 'application/pdf';
+      const pdfFile = this._usuariosService._url+'/Estatuto_assof.pdf';
+      fileTransfer.download(pdfFile, this.file.externalRootDirectory + 'Download/' + 'fichaAdesao.pdf', true)
+          .then((entry) => {
+            loading.dismiss();
+            this._alertCtrl.create({
+              title:'Ficha Adesão',
+              subTitle:'Arquivo baixado para sua pasta de Download',
+              buttons:[
+                {text:'OK'}
+              ]
+            }).present();
+          }, (error) => {
+            this._alertCtrl.create({
+              title:'Erro',
+              subTitle:'Erro ao Baixa Arquivo',
+              buttons:[
+                {text:'OK'}
+              ]
+            }).present();
+          });
   
   }
 }

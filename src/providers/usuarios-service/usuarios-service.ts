@@ -50,8 +50,10 @@ export class UsuariosServiceProvider {
   }
 
   obtemAvatar() {
-    return localStorage.getItem(CHAVE)
-            ? localStorage.getItem(CHAVE)
-            : 'assets/img/avatar-padrao.jpg';
+    return this._url+'/'+this._usuarioLogado.cpf+".jpg";
+  }
+
+  urlService(){
+    return this._url+'/';
   }
 }

@@ -43,6 +43,7 @@ export class AcompanhamentoJuridicoPage {
     this._acompanhamentoJuridicoService.lista(this.usuarioLogado.cpf)
               .subscribe(
                 (AcompanhamentoJuridico) => {
+                  loading.dismiss();
                   this.processos = [];
                   this.acompanhamentos = AcompanhamentoJuridico;
                   console.log("AcompanhamentoJuridico"+AcompanhamentoJuridico[0].titulo);
@@ -51,7 +52,7 @@ export class AcompanhamentoJuridicoPage {
                   });
                   this.processos = Array.from(new Set(this.processos));
 
-                  loading.dismiss();
+                  
                 },
                 (err: HttpErrorResponse) => {
                   console.log(err);
