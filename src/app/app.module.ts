@@ -31,6 +31,7 @@ import { File } from '@ionic-native/file';
 import { GaleriaPresidentesPage } from '../pages/galeria-presidentes/galeria-presidentes';
 import { CadastroUsuarioPage } from '../pages/cadastro-usuario/cadastro-usuario';
 import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
+import { FileOpener } from '@ionic-native/file-opener';
 
 
 @NgModule({
@@ -77,7 +78,7 @@ import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer';
     NoticiasServiceProvider,
     ApiServiceProvider,
     Camera, ImageResizer,
-    AcompanhamentoJuridicoServiceProvider,
+    AcompanhamentoJuridicoServiceProvider,FileOpener,
     FileTransfer, FileTransferObject,File,DocumentViewer
 
   ]
