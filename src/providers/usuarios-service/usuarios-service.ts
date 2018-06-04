@@ -50,8 +50,12 @@ export class UsuariosServiceProvider {
   }
 
   obtemAvatar() {
-
-    if(this._usuarioLogado == null){
+     
+    
+    if(localStorage.getItem(CHAVE)){
+      return localStorage.getItem(CHAVE);
+    }
+    if(this._usuarioLogado == null || !localStorage.getItem(CHAVE)){
       return 'assets/img/avatar-padrao.jpg';
 
     }

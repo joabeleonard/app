@@ -6,9 +6,10 @@ import { ApiServiceProvider } from '../../providers/api-service';
 import { FileOpener } from '@ionic-native/file-opener';
 import { Platform } from 'ionic-angular/platform/platform';
 import { File } from '@ionic-native/file';
-import { FileTransfer } from '@ionic-native/file-transfer';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { DocumentViewer } from '@ionic-native/document-viewer';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 
 
 /**
@@ -38,7 +39,8 @@ export class EstatutoPage {
     private document: DocumentViewer,
     private transfer: FileTransfer,
     private file:File,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private _alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -63,6 +65,39 @@ export class EstatutoPage {
       // or directly passing ArrayBuffer
       // this.pdfSrc = file;
     });
+  }
+
+  downloadEstatuto(){
+
+    let loading = this._loadingCtrl.create({
+      content: 'Baixando Documento...'
+    });
+
+    loading.present(); 
+
+      const fileTransfer: FileTransferObject = this.transfer.create();
+      const mime = 'application/pdf';
+      const pdfFile = this._url+'/Estatuto_assof.pdf';
+      fileTransfer.download(pdfFile, this.file.externalRootDirectory + 'Download/' + 'fichaAdesao.pdf', true)
+          .then((entry) => {
+            loading.dismiss();
+            this._alertCtrl.create({
+              title:'Ficha Adesão',
+              subTitle:'Arquivo baixado para sua pasta de Download',
+              buttons:[
+                {text:'OK'}
+              ]
+            }).present();
+          }, (error) => {
+            this._alertCtrl.create({
+              title:'Erro',
+              subTitle:'Erro ao Baixa Arquivo',
+              buttons:[
+                {text:'OK'}
+              ]
+            }).present();
+          });
+  
   }
 
   incrementZoom(amount: number) {

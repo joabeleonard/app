@@ -46,7 +46,6 @@ export class AcompanhamentoJuridicoPage {
                   loading.dismiss();
                   this.processos = [];
                   this.acompanhamentos = AcompanhamentoJuridico;
-                  console.log("AcompanhamentoJuridico"+AcompanhamentoJuridico[0].titulo);
                   AcompanhamentoJuridico.forEach(element => {
                       this.processos.push(element.numeroProcesso);
                   });

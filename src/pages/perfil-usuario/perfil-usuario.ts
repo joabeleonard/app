@@ -310,7 +310,7 @@ export class PerfilUsuarioPage {
       const fileTransfer: FileTransferObject = this.transfer.create();
       const mime = 'application/pdf';
       const pdfFile = this._usuariosService._url+'/Estatuto_assof.pdf';
-      fileTransfer.download(pdfFile, this.file.externalRootDirectory + 'Download/' + 'fichaAdesao.pdf', true)
+      fileTransfer.download(pdfFile, this.file.externalRootDirectory + 'Download/' + 'REQUERIMENTO_DE_ADESAO_SEPLAG.docx', true)
           .then((entry) => {
             loading.dismiss();
             this._alertCtrl.create({
