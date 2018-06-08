@@ -52,6 +52,9 @@ export class UsuariosServiceProvider {
   obtemAvatar() {
      
     
+    if(this._usuarioLogado != null && this._usuarioLogado.cpf != null){
+      return this._url+'/'+this._usuarioLogado.cpf+".jpg";
+    }
     if(localStorage.getItem(CHAVE)){
       return localStorage.getItem(CHAVE);
     }
@@ -59,7 +62,6 @@ export class UsuariosServiceProvider {
       return 'assets/img/avatar-padrao.jpg';
 
     }
-    return this._url+'/'+this._usuarioLogado.cpf+".jpg";
   }
 
   urlService(){

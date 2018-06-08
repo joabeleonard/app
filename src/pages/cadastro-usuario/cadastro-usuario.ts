@@ -82,7 +82,7 @@ export class CadastroUsuarioPage {
 
             this._alertCtrl.create({
               title:'Erro',
-              subTitle:err ,
+              subTitle:'Por favor adicione uma foto.' ,
               buttons:[
                 {text:'OK'}
               ]

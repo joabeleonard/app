@@ -6,9 +6,14 @@ page-perfil-usuario {
     
             ion-avatar img {
                 background-color: #DDDDDD;
+                width: 100%;
+                height: 100%;
+                margin: auto;
+            }
+
+            ion-avatar{
                 width: 200px;
                 height: 200px;
-                margin: auto;
             }
     
             .btn-tirar-foto {
